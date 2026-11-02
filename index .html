@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيد ميلاد سعيد يا حبيبتي ❤️</title>
+    <style>
+        body { 
+            font-family: Tahoma, sans-serif; 
+            background: #121212; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* القلوب المتحركة في الخلفية */
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -50px;
+            color: #ff758c;
+            font-size: 20px;
+            animation: floatUp 5s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) scale(0.8);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-105vh) translateX(30px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* حاوية الإطار المضيء */
+        .glow-wrap {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 420px;
+            border-radius: 27px;
+            padding: 3px;
+            background: linear-gradient(45deg, #ff4b2b, #ff416c, #ffb6c1, #ffffff);
+            background-size: 300% 300%;
+            animation: glowingBorder 4s ease infinite;
+            box-shadow: 0 0 25px rgba(255, 75, 43, 0.4);
+            margin: 20px 0;
+        }
+
+        @keyframes glowingBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .box { 
+            background: rgba(18, 18, 18, 0.98); 
+            padding: 25px; 
+            border-radius: 25px; 
+            text-align: center; 
+            width: 100%;
+            box-sizing: border-box;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .box::-webkit-scrollbar {
+            width: 5px;
+        }
+        .box::-webkit-scrollbar-thumb {
+            background: #ffb6c1;
+            border-radius: 10px;
+        }
+
+        /* شاشة تسجيل الدخول */
+        #login h2 {
+            color: #fff;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        #login p {
+            color: #aaa;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+        input { 
+            padding: 12px 15px; 
+            width: 100%; 
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            border-radius: 15px; 
+            text-align: center; 
+            font-size: 16px; 
+            color: #fff;
+            margin-bottom: 15px; 
+            outline: none; 
+            box-sizing: border-box;
+        }
+        input::placeholder {
+            color: #777;
+        }
+        button { 
+            padding: 12px 25px; 
+            background: #ffb6c1; 
+            color: #333; 
+            font-weight: bold;
+            border: none; 
+            border-radius: 15px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            width: 100%;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #ff9fb0;
+        }
+        .hidden { display: none !important; }
+        .error { color: #ff6b6b; margin-top: 12px; font-size: 13px; }
+        
+        /* صفحة المحتوى الداخلية */
+        .date-title {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* شبكة العداد */
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .counter-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 12px 5px;
+            text-align: center;
+        }
+
+        .counter-card .number {
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .counter-card .label {
+            color: #aaa;
+            font-size: 12px;
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* تصميم عارض الصور (Image Slider) قبل الأغنية */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #ffb6c1;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* أزرار التبديل يمين ويسار فوق الصورة */
+        .prev-slide, .next-slide {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 50%;
+            user-select: none;
+            transition: 0.3s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .next-slide { left: 10px; }
+        .prev-slide { right: 10px; }
+
+        .prev-slide:hover, .next-slide:hover {
+            background-color: rgba(255, 182, 193, 0.8);
+            color: #333;
+        }
+
+        /* نقاط التوجيه تحت الصورة */
+        .slide-dots {
+            text-align: center;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 8px;
+            width: 8px;
+            margin: 0 4px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .dot.active {
+            background-color: #ffb6c1;
+            width: 20px;
+            border-radius: 4px;
+        }
+
+        /* مشغل الموسيقى */
+        .music-player {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .music-info {
+            text-align: right;
+        }
+
+        .music-title {
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .music-subtitle {
+            color: #aaa;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .play-icon-btn {
+            background: rgba(255, 182, 193, 0.2);
+            border: 1px solid #ffb6c1;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #ffb6c1;
+            transition: 0.2s;
+        }
+        
+        .play-icon-btn:hover {
+            background: #ffb6c1;
+            color: #333;
+        }
+
+        .section-title {
+            color: #ffb6c1;
+            font-size: 16px;
+            margin: 20px 0 15px;
+            font-weight: bold;
+        }
+
+        /* كروت الجوابات القابلة للقلب */
+        .letters-grid {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 48%;
+            height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            border-radius: 20px;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .flip-card-front {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 30px;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .flip-card-front span {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .flip-card-back {
+            background: #ffc0cb;
+            color: #333;
+            transform: rotateY(180deg);
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.5;
+            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.2);
+        }
+
+        .fancy-text {
+            font-family: 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        /* زر "آخر حاجة ليكي" */
+        .final-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #ffb6c1;
+            color: #fff;
+            padding: 14px;
+            border-radius: 25px;
+            font-size: 15px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .final-btn:hover {
+            background: rgba(255, 182, 193, 0.2);
+        }
+
+        /* نافذة الرسالة النهائية (Popup Modal) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 2px solid #ffb6c1;
+            padding: 25px 20px;
+            border-radius: 25px;
+            text-align: center;
+            max-width: 360px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255, 182, 193, 0.3);
+            animation: popIn 0.4s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content .heart-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            color: #eee;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            white-space: pre-line;
+            text-align: right;
+        }
+
+        .close-modal {
+            background: #ffb6c1;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- القلوب المتحركة في الخلفية -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <div class="glow-wrap">
+        
+        <!-- شاشة تسجيل الدخول -->
+        <div id="login" class="box">
+            <h2>✨ مفاجأة خاصة جداً</h2>
+            <p>اكتبي الباسورد عشان تشوفي المفاجأة ❤️</p>
+            <input type="password" id="pass" placeholder="اكتبي الباسورد هنا...">
+            <button onclick="check()">دوسي هنا يا ست البنات 🥰</button>
+            <div id="err" class="error hidden">كلمة السر غلط يا قلبي، حاولي تاني! ❌</div>
+        </div>
+
+        <!-- صفحة المحتوى الداخلية -->
+        <div id="content" class="box hidden">
+            
+            <div class="date-title">2023 - 01 - 20</div>
+
+            <!-- العداد -->
+            <div class="counter-grid">
+                <div class="counter-card">
+                    <span class="number" id="years">0</span>
+                    <span class="label">سنة</span>
+                </div>
+                <div class="counter-card">
+                    <span class="number" id="months">0</span>
+                    <span class="label">شهر</span>
+                </div>
+                <div class="counter-card">
+                    <span class="number" id="days">0</span>
+                    <span class="label">يوم</span>
+                </div>
+                <div class="counter-card">
+                    <span class="number" id="hours">0</span>
+                    <span class="label">ساعة</span>
+                </div>
+                <div class="counter-card">
+                    <span class="number" id="minutes">0</span>
+                    <span class="label">دقيقة</span>
+                </div>
+                <div class="counter-card">
+                    <span class="number" id="seconds">0</span>
+                    <span class="label">ثانية</span>
+                </div>
+            </div>
+
+            <!-- عارض الصور المتحرك (Slideshow) قبل الأغنية -->
+            <div class="slideshow-container" onclick="nextSlide()">
+                <!-- الصورة الأولى -->
+                <div class="slide">
+                    <img src="https://i.ibb.co/8gRtmjXd/image.jpg" alt="صورة 1">
+                </div>
+                <!-- الصورة الثانية -->
+                <div class="slide">
+                    <img src="https://i.ibb.co/23kTNVXs/image.jpg" alt="صورة 2">
+                </div>
+
+                <!-- أزرار التنقل -->
+                <a class="prev-slide" onclick="event.stopPropagation(); plusSlides(1)">&#10094;</a>
+                <a class="next-slide" onclick="event.stopPropagation(); plusSlides(-1)">&#10095;</a>
+
+                <!-- النقاط -->
+                <div class="slide-dots">
+                    <span class="dot" onclick="event.stopPropagation(); currentSlide(1)"></span>
+                    <span class="dot" onclick="event.stopPropagation(); currentSlide(2)"></span>
+                </div>
+            </div>
+
+            <!-- مشغل الموسيقى -->
+            <div class="music-player">
+                <button class="play-icon-btn" id="playBtn" onclick="toggleAudio()">▶</button>
+                <div class="music-info">
+                    <div class="music-title">❤️ يا أميرة الحلوين</div>
+                    <div class="music-subtitle">صوت حبينا 🎵</div>
+                </div>
+            </div>
+
+            <audio id="bgSong" loop>
+                <source src="https://media.vocaroo.com/mp3/175e7xWP7Obv" type="audio/mp3">
+                متصفحك لا يدعم تشغيل الصوت.
+            </audio>
+
+            <div class="section-title">💌 جوابات ليكي..</div>
+
+            <!-- كروت الجوابات القابلة للقلب -->
+            <div class="letters-grid">
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            💌
+                            <span>دوسي للفتح</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p>أجمل لولي 😍😘</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            ❤️
+                            <span>دوسي للفتح</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="fancy-text">Happy Birthday 🥳✨</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- زر آخر حاجة ليكي -->
+            <button class="final-btn" onclick="openModal()">
+                🎁 آخر حاجة ليكي.. ❤️
+            </button>
+
+        </div>
+    </div>
+
+    <!-- نافذة الرسالة النهائية -->
+    <div class="modal" id="finalModal">
+        <div class="modal-content">
+            <div class="heart-icon">💖</div>
+            <p>النهارده أجمل يوم في الدنيا، عيد الميلاد أحلى وأجمل لولي اتخلقت 🎂🥳🎉.
+
+مش عارف أتكلم ولا أقول إيه بحب اكلمك ، وبحب أشوفك مبسوطة وفرحانة دايماً 😍🥰.
+
+بحب أشوف ضحكتك الحلوة وأسمع صوتك 💖، ومش بعرف أعدي يوم من غيرهم 🥺✨.
+
+كل سنة وأنتي الأجمل 🌷، كل سنة وأنتي الأحلى 🌸، كل سنة وأنتي القمر اللي بينور الدنيا 🌕💫.
+
+كل سنة وأنتي دايماً ضحكتك منورة الدنيا كلها 😍✨.
+
+Happy Birthday 🎂🎈🎁🌟</p>
+            <button class="close-modal" onclick="closeModal()">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        // سكربت عارض الصور (Slideshow)
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function nextSlide() {
+            showSlides(slideIndex += 1);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+        }
+
+        // القلوب المتحركة
+        function createHeart() {
+            const container = document.getElementById('heartsContainer');
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            
+            const symbols = ['❤️', '💖', '💗', '💕', '✨'];
+            heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            const size = Math.random() * 15 + 15;
+            heart.style.fontSize = size + 'px';
+            
+            const duration = Math.random() * 3 + 3;
+            heart.style.animationDuration = duration + 's';
+            
+            container.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, duration * 1000);
+        }
+        setInterval(createHeart, 300);
+
+        const startDate = new Date("2023-01-20T00:00:00");
+
+        function updateCounter() {
+            const now = new Date();
+            let diff = now - startDate;
+
+            let seconds = Math.floor(diff / 1000) % 60;
+            let minutes = Math.floor(diff / (1000 * 60)) % 60;
+            let hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+            let days = Math.floor(diff / (1000 * 60 * 60 * 24)) % 30;
+            let months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.4375)) % 12;
+            let years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+
+            document.getElementById('years').innerText = years;
+            document.getElementById('months').innerText = months;
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+        }
+        setInterval(updateCounter, 1000);
+
+        let isPlaying = false;
+        function toggleAudio() {
+            const audio = document.getElementById('bgSong');
+            const playBtn = document.getElementById('playBtn');
+            
+            if (isPlaying) {
+                audio.pause();
+                playBtn.innerHTML = "▶";
+                isPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    playBtn.innerHTML = "⏸";
+                    isPlaying = true;
+                }).catch(err => console.log("Play error: ", err));
+            }
+        }
+
+        function openModal() {
+            document.getElementById('finalModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('finalModal').style.display = 'none';
+        }
+
+        const MY_PASS = "17/10/2005";
+        
+        function check() {
+            let val = document.getElementById('pass').value;
+            if(val === MY_PASS) {
+                document.getElementById('login').classList.add('hidden');
+                document.getElementById('content').classList.remove('hidden');
+                
+                const audio = document.getElementById('bgSong');
+                const playBtn = document.getElementById('playBtn');
+                audio.play().then(() => {
+                    playBtn.innerHTML = "⏸";
+                    isPlaying = true;
+                }).catch(err => console.log("Auto-play blocked: ", err));
+            } else {
+                document.getElementById('err').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
